@@ -43,7 +43,7 @@ class team {
     let num = randNum(teams.length); 
     let num2 = randNum(teams.length);
     teamWins(teams[num],teams[num2]);
-    teamWins(equipos[num],equipos[num2]);
+    teamWins(teams[num],teams[num2]);
 
     elements.match.textContent = teams[num].getTeams() + ' ' + teams[num].getGoals()
      + ' -- ' + teams[num2].getGoals() + ' ' + teams[num2].getTeams();
