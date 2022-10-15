@@ -1,7 +1,7 @@
 class team {
     constructor(teams,goals,wins){
       this.teams = teams;
-      this.goles = goals;
+      this.goals = goals;
       this.wins = wins; 
     }
     getTeams(){
