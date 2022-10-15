@@ -1,50 +1,75 @@
-class team {
-    constructor(teams,goals,wins){
-      this.teams = teams;
-      this.goals = goals;
-      this.wins = wins; 
-    }
-    getTeams(){
-      return this.teams;
-    }
-    setTeams(teams){
-      this.Teams = teams;
-    }
-    getGoals(){
-      return this.goals;
-    }
-    setGoles(goals){
-      this.goals = goals;
-    }
-    getWins(){
-      return this.wins;
-    }
-    setWins(wins){
-      this.wins = wins;
-    }
-  }
-  function keys(){ 
-    for(var i in teams){
-      teams[i].setGoals(Math.floor((Math.random() * 7) + 1));
-    }
-  }
+const teamsList = [
+  { "team:": "Vasco"},
+  { "team:": "Flu"},
+  { "team:": "Fla"},
+  { "team:": "Cam"},
+  { "team:": "Cec"},
+  { "team:": "Sep"},
+  { "team:": "SCCP"},
+  { "team:": "Bot"},
+]
 
-  function teamWins(team1,team2){ 
-    if(team1.goals > team2.goals){
-      team1.wins++;
-    } else if(team1.goles < team2.goles){
-      team2.wins++;
-    }
-  }
+function randomChoice(arr) {
+  return arr[Math.floor](Math.random() * arr.length);
+      
+}
 
-  function newGame(){ 
-    keys();
+const divBox1 = document.querySelector(`div#box-1`)
+
+const gameGenerator = () => {
+  if (cupTeams.lenght > 0 ){
+    let team1 = randomChoice(cupTeams)
+    team1 = cupTeams.indexof(team1)
+    let team1Name = cupTeams[team1]["team"]
+    let team1Goals = Math.floor(Math.random() * 7)
+    cupTeams.splice(team1, 1)
+
+  let team2 = randomChoice(cupTeams)
+    team2 = cupTeams.indexof(team2)
+    let team2Name = cupTeams[team1]["team"]
+    let team2Goals = Math.floor(Math.random() * 4)
+    cupTeams.splice(team2, 1)
   
-    let num = randNum(teams.length); 
-    let num2 = randNum(teams.length);
-    teamWins(teams[num],teams[num2]);
-    teamWins(teams[num],teams[num2]);
+  let matchupsData = {"home":{"name": team1Name, "goals": team1Goals}, "away": {"name": team2Name, "goals": team2Goals}}
+  return matchupsData}  
+ 
+  else{
+    return "end"
+  }
+}
 
-    elements.match.textContent = teams[num].getTeams() + ' ' + teams[num].getGoals()
-     + ' -- ' + teams[num2].getGoals() + ' ' + teams[num2].getTeams();
+const showGameDom = (gameGenerator, i) => {
+  if (gameGenerator != "end"){
+    let data = matchupsData
+    let nGame = i
+    let game = document.createElement('div')
+    game.setAttribute('id', 'game${i+1}')
+    game.innerHTML = `${data["home"]["name"]} ${data["home"]["goals"]} X 
+      ${data["away"]["name"]} ${data["away"]["goals"]}`
+    
+    divBox1.appendChild(game)
+    if(data["home"]["goals"] > data["away"]["goals"]){
+      console.log(`winner ${data["home"]["name"]}`)
+      return {"team":data["home"]["name"]} }
+    }else {
+      console.log(`winner ${data["away"]["name"]}`)
+      return {"team":data["away"]["name"]}
+    }
+  }
+
+  const total = teamsList.lenght
+  const matchups = Math.round((total/2))
+  let cupTeams = teamsList
+  let nextPhase = []
+  console.log(matchups)
+  for(let i =0 ; i < matchups; i++){
+    winner = showGameDom(gameGenerator(), i)
+    nextPhase.push(winner)
+    if(i+1 < matchups) {
+      
+    }else{
+      i =(i/2)
+      cupTeams = nextPhase
+      nextPhase = []
+    }
   }
